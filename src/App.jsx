@@ -73,54 +73,6 @@ const translations = {
     lightTheme: 'Light',
     darkTheme: 'Dark'
   },
-  es: {
-    title: 'Calculadora de Salud',
-    subtitle: 'Calcula tu IMC y obtén recomendaciones personalizadas',
-    weight: 'Peso',
-    height: 'Altura',
-    age: 'Edad',
-    gender: 'Género',
-    activityLevel: 'Nivel de Actividad',
-    male: 'Hombre',
-    female: 'Mujer',
-    sedentary: 'Sedentario',
-    light: 'Ligero',
-    moderate: 'Moderado',
-    very: 'Muy Activo',
-    sedentaryDesc: 'Poco o ningún ejercicio',
-    lightDesc: 'Ejercicio ligero 1-3 días/semana',
-    moderateDesc: 'Ejercicio moderado 3-5 días/semana',
-    veryDesc: 'Ejercicio intenso 6-7 días/semana',
-    calculate: 'Calcular Mis Resultados',
-    resultsTitle: 'Tus Resultados de Salud',
-    bmiResult: 'Resultado de IMC',
-    dailyCalories: 'Calorías Diarias',
-    basedOnBMR: 'Basado en TMB',
-    estimateNote: 'Esto es una estimación. Las necesidades individuales pueden variar según el metabolismo y otros factores.',
-    healthTips: 'Consejos de Salud Personalizados',
-    exerciseRecommendations: 'Recomendaciones de Ejercicio',
-    tailoredToBMI: 'Adaptado a tu categoría de IMC',
-    examples: 'Ejemplos',
-    helpfulResources: 'Recursos Útiles',
-    recalculate: 'Recalcular',
-    underweight: 'Bajo Peso',
-    normalWeight: 'Peso Normal',
-    overweight: 'Sobrepeso',
-    obese: 'Obeso',
-    underweightMsg: 'Considera consultar a un proveedor de atención médica sobre estrategias saludables para aumentar de peso.',
-    normalWeightMsg: '¡Estás en un rango de peso saludable! Sigue con el buen trabajo.',
-    overweightMsg: 'Considera adoptar hábitos alimenticios más saludables y aumentar la actividad física.',
-    obeseMsg: 'Consulta con a un proveedor de atención médica para obtener asesoramiento personalizado sobre el control de peso.',
-    enterWeight: 'Ingresa tu peso',
-    enterHeightCm: 'Ingresa altura en cm',
-    enterHeightFt: 'Pies',
-    enterHeightIn: 'Pulgadas',
-    enterAge: 'Ingresa tu edad',
-    language: 'Idioma',
-    theme: 'Tema',
-    lightTheme: 'Claro',
-    darkTheme: 'Oscuro'
-  },
   de: {
     title: 'Kostenloser BMI Rechner',
     subtitle: 'Berechne deinen BMI und erhalte personalisierte Empfehlungen',
@@ -229,27 +181,37 @@ function App() {
     const heightM = heightCm / 100;
     const bmi = weightKg / (heightM * heightM);
     
-    let category, color, message;
+    let category, color, message, englishCategory;
 
     if (bmi < 18.5) {
+      englishCategory = 'Underweight';
       category = t.underweight;
       color = '#3B82F6';
       message = t.underweightMsg;
     } else if (bmi < 25) {
+      englishCategory = 'Normal Weight';
       category = t.normalWeight;
       color = '#10B981';
       message = t.normalWeightMsg;
     } else if (bmi < 30) {
+      englishCategory = 'Overweight';
       category = t.overweight;
       color = '#F59E0B';
       message = t.overweightMsg;
     } else {
+      englishCategory = 'Obese';
       category = t.obese;
       color = '#EF4444';
       message = t.obeseMsg;
     }
 
-    return { value: Math.round(bmi * 10) / 10, category, color, message };
+    return { 
+      value: Math.round(bmi * 10) / 10, 
+      category, 
+      englishCategory,
+      color, 
+      message 
+    };
   };
 
   const calculateCalories = (weightKg, heightCm, age, gender, activity) => {
@@ -281,24 +243,24 @@ function App() {
   const getHealthTips = (bmiCategory) => {
     const tips = {
       'Underweight': [
-        { icon: <Utensils size={20} color="#3B82F6" />, text: 'Add healthy fats like nuts and avocados to your diet' },
-        { icon: <Target size={20} color="#3B82F6" />, text: 'Focus on strength training to build muscle mass' },
-        { icon: <Moon size={20} color="#3B82F6" />, text: 'Ensure adequate sleep for muscle recovery' },
+        { icon: <Utensils size={20} color="#3B82F6" />, text: language === 'de' ? 'Füge gesunde Fette wie Nüsse und Avocados zu deiner Ernährung hinzu' : 'Add healthy fats like nuts and avocados to your diet' },
+        { icon: <Target size={20} color="#3B82F6" />, text: language === 'de' ? 'Konzentriere dich auf Krafttraining zum Muskelaufbau' : 'Focus on strength training to build muscle mass' },
+        { icon: <Moon size={20} color="#3B82F6" />, text: language === 'de' ? 'Sorge für ausreichend Schlaf zur Muskelregeneration' : 'Ensure adequate sleep for muscle recovery' },
       ],
       'Normal Weight': [
-        { icon: <Utensils size={20} color="#10B981" />, text: 'Fill half your plate with vegetables and fruits' },
-        { icon: <Activity size={20} color="#10B981" />, text: 'Aim for 150 minutes of moderate exercise weekly' },
-        { icon: <Moon size={20} color="#10B981" />, text: 'Get 7-9 hours of quality sleep each night' },
+        { icon: <Utensils size={20} color="#10B981" />, text: language === 'de' ? 'Fülle die Hälfte deines Tellers mit Gemüse und Obst' : 'Fill half your plate with vegetables and fruits' },
+        { icon: <Activity size={20} color="#10B981" />, text: language === 'de' ? 'Strebe 150 Minuten moderate Bewegung pro Woche an' : 'Aim for 150 minutes of moderate exercise weekly' },
+        { icon: <Moon size={20} color="#10B981" />, text: language === 'de' ? 'Schlafe jede Nacht 7-9 Stunden qualitativ hochwertigen Schlaf' : 'Get 7-9 hours of quality sleep each night' },
       ],
       'Overweight': [
-        { icon: <Utensils size={20} color="#F59E0B" />, text: 'Reduce portion sizes and limit processed foods' },
-        { icon: <Activity size={20} color="#F59E0B" />, text: 'Start with 30 minutes of daily walking' },
-        { icon: <Heart size={20} color="#F59E0B" />, text: 'Stay hydrated with 8 glasses of water daily' },
+        { icon: <Utensils size={20} color="#F59E0B" />, text: language === 'de' ? 'Reduziere Portionsgrößen und begrenze verarbeitete Lebensmittel' : 'Reduce portion sizes and limit processed foods' },
+        { icon: <Activity size={20} color="#F59E0B" />, text: language === 'de' ? 'Beginne mit 30 Minuten täglichem Gehen' : 'Start with 30 minutes of daily walking' },
+        { icon: <Heart size={20} color="#F59E0B" />, text: language === 'de' ? 'Bleibe hydriert mit 8 Gläsern Wasser täglich' : 'Stay hydrated with 8 glasses of water daily' },
       ],
       'Obese': [
-        { icon: <Utensils size={20} color="#EF4444" />, text: 'Focus on whole foods and lean proteins' },
-        { icon: <Activity size={20} color="#EF4444" />, text: 'Begin with low-impact activities like swimming' },
-        { icon: <Heart size={20} color="#EF4444" />, text: 'Monitor progress and celebrate small wins' },
+        { icon: <Utensils size={20} color="#EF4444" />, text: language === 'de' ? 'Konzentriere dich auf Vollwertkost und mageres Protein' : 'Focus on whole foods and lean proteins' },
+        { icon: <Activity size={20} color="#EF4444" />, text: language === 'de' ? 'Beginne mit gelenkschonenden Aktivitäten wie Schwimmen' : 'Begin with low-impact activities like swimming' },
+        { icon: <Heart size={20} color="#EF4444" />, text: language === 'de' ? 'Überwache deine Fortschritte und feiere kleine Erfolge' : 'Monitor progress and celebrate small wins' },
       ],
     };
 
@@ -310,88 +272,104 @@ function App() {
       'Underweight': [
         {
           icon: <Dumbbell size={24} color="#3B82F6" />,
-          title: 'Strength Training',
-          description: 'Build muscle mass with focused strength exercises',
-          examples: ['Weight lifting', 'Resistance bands', 'Bodyweight exercises'],
+          title: language === 'de' ? 'Krafttraining' : 'Strength Training',
+          description: language === 'de' ? 'Baue Muskelmasse mit gezielten Kraftübungen auf' : 'Build muscle mass with focused strength exercises',
+          examples: language === 'de' 
+            ? ['Gewichtheben', 'Widerstandsbänder', 'Körpergewichtsübungen'] 
+            : ['Weight lifting', 'Resistance bands', 'Bodyweight exercises'],
           resources: [
-            { title: 'Beginner Strength Training Guide', url: 'https://bonytobeastly.com/workout-routine-for-skinny-beginners/' },
-            { title: 'Home Workouts Without Equipment', url: 'https://www.nerdfitness.com/blog/beginner-body-weight-workout-burn-fat-build-muscle/' }
+            { title: language === 'de' ? 'Krafttrainingsleitfaden für Anfänger' : 'Beginner Strength Training Guide', url: 'https://bonytobeastly.com/workout-routine-for-skinny-beginners/' },
+            { title: language === 'de' ? 'Heimtraining ohne Geräte' : 'Home Workouts Without Equipment', url: 'https://www.nerdfitness.com/blog/beginner-body-weight-workout-burn-fat-build-muscle/' }
           ]
         },
         {
           icon: <Yoga size={24} color="#3B82F6" />,
-          title: 'Yoga for Appetite & Digestion',
-          description: 'Specific poses can help stimulate appetite and improve digestion',
-          examples: ['Bhujangasana (Cobra Pose)', 'Pavanamuktasana (Wind-Relieving Pose)', 'Surya Namaskar (Sun Salutation)'],
+          title: language === 'de' ? 'Yoga für Appetit & Verdauung' : 'Yoga for Appetite & Digestion',
+          description: language === 'de' ? 'Bestimmte Posen können den Appetit anregen und die Verdauung verbessern' : 'Specific poses can help stimulate appetite and improve digestion',
+          examples: language === 'de' 
+            ? ['Bhujangasana (Kobra-Pose)', 'Pavanamuktasana (Windbefreiende Pose)', 'Surya Namaskar (Sonnengruß)'] 
+            : ['Bhujangasana (Cobra Pose)', 'Pavanamuktasana (Wind-Relieving Pose)', 'Surya Namaskar (Sun Salutation)'],
           resources: [
-            { title: 'Yoga for Digestion', url: 'https://www.yogajournal.com/practice/yoga-sequences/8-poses-better-digestion/' },
-            { title: 'Yoga Poses to Boost Appetite', url: 'https://www.thehealthsite.com/photo-gallery/7-best-yoga-asanas-to-increase-your-appetite-1190849/' }
+            { title: language === 'de' ? 'Yoga für die Verdauung' : 'Yoga for Digestion', url: 'https://www.yogajournal.com/practice/yoga-sequences/8-poses-better-digestion/' },
+            { title: language === 'de' ? 'Yoga-Posen zur Appetitanregung' : 'Yoga Poses to Boost Appetite', url: 'https://www.thehealthsite.com/photo-gallery/7-best-yoga-asanas-to-increase-your-appetite-1190849/' }
           ]
         }
       ],
       'Normal Weight': [
         {
           icon: <Dumbbell size={24} color="#10B981" />,
-          title: 'Maintenance Workouts',
-          description: 'Maintain your healthy weight with balanced exercise',
-          examples: ['Cardio 3-4 times/week', 'Strength training 2-3 times/week', 'Flexibility exercises'],
+          title: language === 'de' ? 'Erhaltungstraining' : 'Maintenance Workouts',
+          description: language === 'de' ? 'Erhalte dein gesundes Gewicht mit ausgewogenem Training' : 'Maintain your healthy weight with balanced exercise',
+          examples: language === 'de' 
+            ? ['Cardio 3-4 mal/Woche', 'Krafttraining 2-3 mal/Woche', 'Flexibilitätsübungen'] 
+            : ['Cardio 3-4 times/week', 'Strength training 2-3 times/week', 'Flexibility exercises'],
           resources: [
-            { title: 'Balanced Workout Routine', url: 'https://www.youtube.com/watch?v=cbKkB3POqaY&ab_channel=growingannanas' },
-            { title: 'Fitness Blender Workouts', url: 'https://www.fitnessblender.com/' }
+            { title: language === 'de' ? 'Ausgeglichene Trainingsroutine' : 'Balanced Workout Routine', url: 'https://www.youtube.com/watch?v=cbKkB3POqaY&ab_channel=growingannanas' },
+            { title: language === 'de' ? 'Fitness Blender Workouts' : 'Fitness Blender Workouts', url: 'https://www.fitnessblender.com/' }
           ]
         },
         {
           icon: <Yoga size={24} color="#10B981" />,
-          title: 'Yoga for Maintenance',
-          description: 'Maintain flexibility, strength, and mental balance',
-          examples: ['Vinyasa flow', 'Hatha yoga', 'Pranayama breathing exercises'],
+          title: language === 'de' ? 'Yoga zur Erhaltung' : 'Yoga for Maintenance',
+          description: language === 'de' ? 'Erhalte Flexibilität, Kraft und mentales Gleichgewicht' : 'Maintain flexibility, strength, and mental balance',
+          examples: language === 'de' 
+            ? ['Vinyasa Flow', 'Hatha Yoga', 'Pranayama Atemübungen'] 
+            : ['Vinyasa flow', 'Hatha yoga', 'Pranayama breathing exercises'],
           resources: [
-            { title: 'Yoga for Every Body', url: 'https://www.youtube.com/watch?v=3X0hEHop8ec&ab_channel=YogawithKassandra' },
-            { title: 'Free Yoga Classes', url: 'https://yogawithadriene.com/free-yoga-videos/' }
+            { title: language === 'de' ? 'Yoga für jeden Körper' : 'Yoga for Every Body', url: 'https://www.youtube.com/watch?v=3X0hEHop8ec&ab_channel=YogawithKassandra' },
+            { title: language === 'de' ? 'Kostenlose Yogakurse' : 'Free Yoga Classes', url: 'https://yogawithadriene.com/free-yoga-videos/' }
           ]
         }
       ],
       'Overweight': [
         {
           icon: <Dumbbell size={24} color="#F59E0B" />,
-          title: 'Cardio & Strength Combo',
-          description: 'Burn fat while building lean muscle',
-          examples: ['Walking or jogging', 'Cycling', 'Circuit training'],
+          title: language === 'de' ? 'Kombination aus Cardio & Kraft' : 'Cardio & Strength Combo',
+          description: language === 'de' ? 'Verbrenne Fett und baue gleichzeitig schlanke Muskeln auf' : 'Burn fat while building lean muscle',
+          examples: language === 'de' 
+            ? ['Gehen oder Joggen', 'Radfahren', 'Zirkeltraining'] 
+            : ['Walking or jogging', 'Cycling', 'Circuit training'],
           resources: [
-            { title: 'Beginner Fat Loss Workout', url: 'https://www.youtube.com/watch?v=CIxNJbit9BA&ab_channel=Roberta%27sGym' },
-            { title: 'Low-Impact Cardio Exercises', url: 'https://www.verywellfit.com/low-impact-cardio-exercises-1230823' }
+            { title: language === 'de' ? 'Anfänger-Fettverbrennungstraining' : 'Beginner Fat Loss Workout', url: 'https://www.youtube.com/watch?v=CIxNJbit9BA&ab_channel=Roberta%27sGym' },
+            { title: language === 'de' ? 'Gelenkschonende Cardio-Übungen' : 'Low-Impact Cardio Exercises', url: 'https://www.verywellfit.com/low-impact-cardio-exercises-1230823' }
           ]
         },
         {
           icon: <Yoga size={24} color="#F59E0B" />,
-          title: 'Yoga for Weight Management',
-          description: 'Gentle practices to support weight loss journey',
-          examples: ['Surya Namaskar (Sun Salutation)', 'Warrior poses', 'Twisting poses for detoxification'],
+          title: language === 'de' ? 'Yoga für Gewichtsmanagement' : 'Yoga for Weight Management',
+          description: language === 'de' ? 'Sanfte Praktiken zur Unterstützung der Gewichtsabnahme' : 'Gentle practices to support weight loss journey',
+          examples: language === 'de' 
+            ? ['Surya Namaskar (Sonnengruß)', 'Krieger-Posen', 'Dreh-Posen zur Entgiftung'] 
+            : ['Surya Namaskar (Sun Salutation)', 'Warrior poses', 'Twisting poses for detoxification'],
           resources: [
-            { title: 'Yoga for Weight Loss', url: 'https://www.youtube.com/watch?v=zUnjJdJitPw&list=PLFr6eAcUWqfDoysc6gtxbFGUKRnq64DZA&ab_channel=YogawithZelinda' },
-            { title: 'Beginner Yoga for Larger Bodies', url: 'https://www.verywellfit.com/yoga-for-plus-size-3566887' }
+            { title: language === 'de' ? 'Yoga zur Gewichtsabnahme' : 'Yoga for Weight Loss', url: 'https://www.youtube.com/watch?v=zUnjJdJitPw&list=PLFr6eAcUWqfDoysc6gtxbFGUKRnq64DZA&ab_channel=YogawithZelinda' },
+            { title: language === 'de' ? 'Yoga für Anfänger mit größerem Körper' : 'Beginner Yoga for Larger Bodies', url: 'https://www.verywellfit.com/yoga-for-plus-size-3566887' }
           ]
         }
       ],
       'Obese': [
         {
           icon: <Dumbbell size={24} color="#EF4444" />,
-          title: 'Low-Impact Exercises',
-          description: 'Gentle activities to start your fitness journey',
-          examples: ['Water aerobics', 'Chair exercises', 'Walking with support'],
+          title: language === 'de' ? 'Gelenkschonende Übungen' : 'Low-Impact Exercises',
+          description: language === 'de' ? 'Sanfte Aktivitäten zum Start deiner Fitnessreise' : 'Gentle activities to start your fitness journey',
+          examples: language === 'de' 
+            ? ['Wassergymnastik', 'Stuhlübungen', 'Gehen mit Unterstützung'] 
+            : ['Water aerobics', 'Chair exercises', 'Walking with support'],
           resources: [
-            { title: 'Exercises for Obese Beginners', url: 'https://www.youtube.com/watch?v=gC_L9qAHVJ8&t=337s&ab_channel=BodyProject' },
-            { title: 'Safe Workouts for Larger Bodies', url: 'https://www.verywellfit.com/plus-size-exercise-tips-3496103' }
-          ]
+            { title: language === 'de' ? 'Übungen für übergewichtige Anfänger' : 'Exercises for Obese Beginners', url: 'https://www.youtube.com/watch?v=gC_L9qAHVJ8&t=337s&ab_channel=BodyProject' },
+            { title: language === 'de' ? 'Sicheres Training für größere Körper' : 'Safe Workouts for Larger Bodies', url: 'https://www.verywellfit.com/plus-size-exercise-tips-3496103' }
+        ]
         },
         {
           icon: <Yoga size={24} color="#EF4444" />,
-          title: 'Gentle Yoga for Beginners',
-          description: 'Adapted practices focusing on mobility and breath',
-          examples: ['Chair yoga', 'Restorative yoga', 'Gentle stretching'],
+          title: language === 'de' ? 'Sanftes Yoga für Anfänger' : 'Gentle Yoga for Beginners',
+          description: language === 'de' ? 'Angepasste Praktiken mit Fokus auf Beweglichkeit und Atmung' : 'Adapted practices focusing on mobility and breath',
+          examples: language === 'de' 
+            ? ['Stuhl-Yoga', 'Restoratives Yoga', 'Sanftes Dehnen'] 
+            : ['Chair yoga', 'Restorative yoga', 'Gentle stretching'],
           resources: [
-            { title: 'Yoga for Larger Bodies', url: 'https://www.youtube.com/watch?v=CUSkADgA5i8' },
-            { title: 'Accessible Yoga Poses', url: 'https://bodybyyoga.training/yoga-for-beginners/yoga-for-plus-sized-beginners/' }
+            { title: language === 'de' ? 'Yoga für größere Körper' : 'Yoga for Larger Bodies', url: 'https://www.youtube.com/watch?v=CUSkADgA5i8' },
+            { title: language === 'de' ? 'Zugängliche Yoga-Posen' : 'Accessible Yoga Poses', url: 'https://bodybyyoga.training/yoga-for-beginners/yoga-for-plus-sized-beginners/' }
           ]
         }
       ],
@@ -433,8 +411,8 @@ function App() {
 
     const bmi = calculateBMI(weightKg, heightCm);
     const calories = calculateCalories(weightKg, heightCm, ageNum, gender, activityLevel);
-    const tips = getHealthTips(bmi.category);
-    const exercises = getExerciseRecommendations(bmi.category);
+    const tips = getHealthTips(bmi.englishCategory);
+    const exercises = getExerciseRecommendations(bmi.englishCategory);
 
     setResults({ bmi, calories, tips, exercises });
     setShowResults(true);
@@ -605,7 +583,7 @@ function App() {
           <div className="settings-row">
             <button 
               className="setting-button"
-              onClick={() => setLanguage(language === 'en' ? 'es' : language === 'es' ? 'de' : 'en')}
+              onClick={() => setLanguage(language === 'en' ? 'de' : 'en')}
             >
               <Globe size={20} color="#3B82F6" />
               <span className="setting-text">
