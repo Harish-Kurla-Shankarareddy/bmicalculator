@@ -20,6 +20,8 @@ import {
   Globe
 } from 'lucide-react';
 
+import { Helmet } from '@dr.pogodin/react-helmet';
+
 // For Yoga icon, use Activity as a fallback
 const Yoga = Activity;
 
@@ -124,6 +126,47 @@ const translations = {
 };
 
 function App() {
+
+      <>
+      {/* ✅ SEO Meta Tags */}
+      <Helmet>
+        <title>BMI Calculator & Health Tips</title>
+        <meta
+          name="description"
+          content="Free online BMI calculator with personalized health tips, daily calorie estimates, and exercise recommendations."
+        />
+        <meta
+          name="keywords"
+          content="BMI calculator, body mass index, health tips, daily calories, exercise recommendations, fitness, weight management"
+        />
+
+        {/* Open Graph for social sharing */}
+        <meta property="og:title" content="BMI Calculator & Health Tips" />
+        <meta
+          property="og:description"
+          content="Calculate your BMI and get personalized health & fitness tips instantly."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://bmicalculator-nine-sigma.vercel.app"
+        />
+        <meta property="og:image" content="/thumbnail.png" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="BMI Calculator & Health Tips" />
+        <meta
+          name="twitter:description"
+          content="Free online BMI calculator with daily calorie estimates, personalized health tips, and exercise recommendations."
+        />
+        <meta name="twitter:image" content="/thumbnail.png" />
+      </Helmet>
+
+      {/* ✅ Your existing app UI */}
+      <h1>BMI Calculator</h1>
+      {/* form, inputs, results, etc. */}
+    </>
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [language, setLanguage] = useState('en');
   const t = translations[language];
