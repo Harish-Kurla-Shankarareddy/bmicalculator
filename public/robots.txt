@@ -1,0 +1,13 @@
+# Allow all search engine bots
+User-agent: *
+Disallow:
+
+# Block Vercel preview/development URLs (optional)
+Disallow: /_next/
+Disallow: /api/
+
+# Sitemap for better indexing
+Sitemap: https://bmicalculator-nine-sigma.vercel.app/sitemap.xml
+
+# Crawl delay to avoid overloading server (optional)
+# Crawl-delay: 10
