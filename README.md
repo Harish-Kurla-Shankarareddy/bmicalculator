@@ -1,12 +1,15 @@
-# React + Vite
+# Free BMI Calculator  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The **Free BMI Calculator** is a simple, interactive, and user-friendly web application that helps users calculate their **Body Mass Index (BMI)** and receive personalized health recommendations. It is designed for anyone who wants to quickly check their BMI, understand their health status, and explore practical lifestyle tips.  
 
-Currently, two official plugins are available:
+## ✨ Key Features  
+- **Accurate BMI Calculation** – Enter your weight, height, age, gender, and activity level to instantly find your BMI.  
+- **Health Categorization** – Clearly shows whether you are *Underweight, Normal, Overweight,* or *Obese*.  
+- **Personalized Suggestions** – Provides tailored health tips and lifestyle guidance based on your BMI result.  
+- **Yoga & Exercise Plans** – Offers specific yoga poses and workout routines for each BMI category, with helpful links for further guidance.  
+- **Activity Levels** – Takes into account your daily activity (sedentary, light, moderate, very active) for more meaningful insights.  
+- **Dark/Light Mode** – Choose your preferred theme for a smooth user experience.  
+- **Language Toggle** – Multi-language support for broader accessibility.  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 💡 Why Use This BMI Calculator?  
+Unlike many basic BMI tools, this project goes beyond just numbers. It not only calculates your BMI but also connects you with **healthy practices, exercise routines, and yoga recommendations** to support your fitness journey. Whether you are aiming to lose weight, maintain balance, or improve overall health, this calculator can be your first step.  
